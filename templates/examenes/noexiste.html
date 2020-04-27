@@ -1,0 +1,15 @@
+{% extends 'examenes/base.html' %}
+
+{% block content %}
+    <div>
+        <h1>Geometría Analítica</h1>
+    </div>
+    {% if existe_cuenta %}
+        <h1> Ya se envio la calificación del examen al número de cuenta {{ numero_de_cuenta }}</h1>
+        <h3>Estas viendo este mensaje por que le diste refresh a la pagina con el examen solucionado.</h3>
+            <h3><a href="/">Regresar</a></h3>
+        </div>
+    {% else %}
+        <h1> El numero de cuenta: {{ numero_de_cuenta }} no existe en el grupo</h1>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,78 @@
+{% load static %}
+
+<script>
+    // Inicia el cronometro
+    function start() {
+        timeInicial = new Date();
+        control = setInterval(cronometro, 10);
+    };
+    // Logica del cronometro
+    function cronometro() {
+        timeActual = new Date();
+        acumularTime = timeActual - timeInicial;
+        acumularTime2 = new Date();
+        acumularTime2.setTime(acumularTime);
+        // cc = Math.round(acumularTime2.getMilliseconds()/10);
+        ss = acumularTime2.getSeconds();
+        mm = acumularTime2.getMinutes();
+        hh = acumularTime2.getHours()-18;
+        // if (cc < 10) {cc = "0"+cc;}
+        if (ss < 10) {ss = "0"+ss;}
+        if (mm < 10) {mm = "0"+mm;}
+        if (hh < 10) {hh = "0"+hh;}
+        // let time = hh+" : "+mm+" : "+ss+" : "+cc;
+        // Inserta el tiempo en el div
+        time = hh+" : "+mm+" : "+ss;
+        $("#cronometro").html(time);
+    };
+    // Ejecuta la funcion start al cargarce la pagina
+    window.onload=start;
+
+    //Función para actualizar cada n segundos(1s = 1000 milisegundos)
+    function actualizar(){location.reload(true);}
+    setInterval("actualizar()", 50*60*1000);
+</script>
+<script>
+    $('#enviar_examen').click(function() {
+        let cronometro = $('#cronometro').text();
+        $('#cronometro_form').attr("value", cronometro);
+    });
+</script>
+
+<script>
+    function existe_cuenta(cta){
+        var allCuentas = {{ cuentas|safe }};
+        for (key in allCuentas) {
+            if (allCuentas[key] === cta) {
+                return true;
+            };
+        };
+        return false;
+    };
+
+    function existe_cuenta_tema(cta){
+        var ctasTema = {{ ctas_tema|safe }};
+        for (key in ctasTema) {
+            if (ctasTema[key] === cta){
+                return true;
+            };
+        };
+        return false;
+    };
+
+    $('#cta_unam').change(function(){
+        var cta = this.value;
+        if (existe_cuenta(cta)){
+            if (existe_cuenta_tema(cta)){
+                $("#mensaje_cta").text("ESTA CUENTA YA REALIZO EL EXAMEN DE ESTE TEMA");
+                $("#enviar_examen").css('visibility', 'hidden');
+            } else {
+                $("#mensaje_cta").text("DA CLICK EN ENVIAR PARA REVISAR TU EXAMEN");
+                $("#enviar_examen").css('visibility', 'visible');
+            }
+        } else {
+            $("#mensaje_cta").text("ESTE NUMERO DE CUENTA NO EXISTE EN EL GRUPO");
+            $("#enviar_examen").css('visibility', 'hidden');
+        };
+    });
+</script>

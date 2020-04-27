@@ -1,0 +1,18 @@
+{% extends 'examenes/base.html' %}
+
+{% block content %}
+    <div>
+        <h1>Geometría Analítica</h1>
+    </div>
+    <h2>Examenes</h2>
+    {% for examen in examenes %}
+        <div>
+            <h2><a href="{% url 'detail' examen.id %}"> {{ examen.tema }}</a></h2>
+        </div>
+    {% endfor %}
+    <br>
+    <div>
+        <h4><a href="{% url 'credits' %}">Créditos</a></h4>
+    </div>
+    <br>
+{% endblock %}

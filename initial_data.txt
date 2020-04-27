@@ -1,0 +1,32 @@
+Examen inicial
+
+* tema
+tema 1
+
+* preguntas
+Calcula la matriz inversa de $[[random, random], [random, random]]$ --
+Calcula el determinante de $[[random, random, random], [random, random, random], [random, random, random]]$--
+Calcule las dos rectas que pasan por el punto $(x0, y0, z0)$ contenidas en el paraboloide hiperbólico $ecuacion$--
+Obtenga la ecuación del plano tangente a la superficie $ecuacion$ en el punto $(x0, y0, z0)$--
+¿Cuál de las siguientes dos familias de curvas en el plano son ortogonales?--
+
+* Respuestas
+inversa_matriz --
+determinate --
+superficies_regladas--
+plano_tangente--
+familia_ortogonales--
+
+* Opcional
+matriz2x2_options --
+--
+superficies_regladas--
+plano_tangente--
+familia_ortogonales--
+
+* Crear pregunta
+--
+--
+superficies_regladas--
+plano_tangente--
+familia_ortogonales--

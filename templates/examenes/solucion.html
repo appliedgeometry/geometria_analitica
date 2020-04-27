@@ -1,0 +1,48 @@
+{% extends 'examenes/base.html' %}
+
+{% block content %}
+    {% if existe_cuenta %}
+        <h2>EXAMEN REVISADO EXITOSAMENTE</h2>
+        <div style="font-size: 18px;">
+            <h2>La calificación {{ calificacion_final }} fue asignada al número de cuenta: {{ numero_cuenta }}.</h2>
+            <p><strong>NOTA:</strong> Si crees necesario, favor de tomar una captura de pantalla para posibles aclaraciones.</p>
+        </div>
+
+    {% else %}
+        <h2>LA CALIFICACION DEL EXAMEN NO PUDO SER ASIGNADA</h2>
+        <div> La calificación {{ calificacion_final }} NO pudo ser asignada al número de cuenta: {{ numero_cuenta }} por que no existe en el grupo</div>
+        <p>Por favor toma un captura de pantalla para hacer una aclaración con tu profesor para que ingrese tu calificación de forma manual.</p>
+        <h3>EL EXAMEN FUE REVISADO EXITOSAMENTE</h3>
+    {% endif %}
+    <br>
+    <h2>RESPUESTAS</h2>
+    <div>
+        {% for item in solucion.examen_result %}
+        <div>
+            * Pregunta: {{item.0}}
+        </div>
+        <br>
+        <div>
+            * Respuesta: {{ item.1 }}
+        </div>
+            
+        <div>
+            <br>
+            <strong> Tu respuesta: {{ item.2 }} </strong>
+            <p>
+            Puntuación: {{ item.3 }}
+            </p>
+            <br>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div>
+        <h3>Calificación final: {{ calificacion_final }}</h3>
+    </div>
+    <div>
+        <h3><a href="/">Regresar</a></h3>
+    </div>
+{% endblock %}
+
+

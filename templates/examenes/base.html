@@ -1,0 +1,40 @@
+{% load static %}
+
+<html>
+<!-- Head -->
+<head>
+<style>
+body {
+    color: white;
+    background-color: black;
+}
+a {
+    color: white;
+}
+.left{
+    text-align: left;
+}
+.right{
+    text-align: right;
+}
+.center{
+    text-align: center;
+}
+</style>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript"
+  src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+</head>
+<!-- Body -->
+<body>
+    {% block content %}
+    {% endblock %}
+</body>
+<!-- Footer -->
+<footer>
+    Este servidor es una fase Beta, si encuentras algún error o tienes alguna sugerencia, por favor envia un email a jcrpanta@ciencias.unam.mx</a>
+</footer>

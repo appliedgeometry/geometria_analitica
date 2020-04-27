@@ -1,0 +1,101 @@
+{% extends 'examenes/base.html' %}
+<head>
+    <link rel="stylesheet" type="text/css" href="css/site.css" />
+    <script type="text/javascript" src="js/cssrefresh.js"></script>
+</head>
+{% block content %}
+    <div>
+        <h1>Geometría Analítica</h1>
+    </div>
+    <div class="center">
+        <div> TIEMPO </div>
+        <div id="cronometro">00 : 00 : 00</div>
+    </div>
+    
+    <div>
+        <h3>Indicaciones</h3>
+        <ol>
+            <li>Si necesitas ingresar funciones especiales(trigonométricas) recuerda hacer lo siguiente: $cos(4)$ = cos(4), $sen(4)$ = sin(4) o $\sqrt{2}$ = sqrt(2) por ejemplo.</li>
+            <li>Para ingresar una fracción debes hacerlo de la siguiente manera: $\frac{1}{\sqrt{2}}$ = 1/sqrt(2).</li>
+            <li> Para números, funciones o fracciones negativas son válidas las siguientes opciones:
+            $\sqrt{2}$ = -sqrt(2), $\sqrt{2}$ = -1*sqrt(2) o $-\frac{1}{\sqrt{2}}$ = -1/sqrt(2).</li>
+            <li>Tienes 50 minutos para resolver 5 problemas</li>
+            <li>Después de los 50 minutos la página se actuliza generando un nuevo examen.</li>
+        </ol>
+    </div>
+    <form id="formEjemplo" method='POST' action="{% url 'check_examen' %}" >
+        {% csrf_token %}
+        <div style="display: none;">
+            <input id="cronometro_form" name="tiempo" type="text" >
+            <input name="tema" type="text" value="{{examen.tema}}">{{ examen.tema }}
+        </div>
+        <div class="left">
+            <h2>{{ examen.tema }}</h2>
+        </div>
+        <p></p>
+        <div>
+            <div>
+                {% for pregunta in examen.preguntas %}
+                    <p>Pregunta {{ pregunta.2 }}: {{ pregunta.0 }}</p>
+                    {% if pregunta.4 %}
+                        <div style="display: none;">
+                            <input name="pregunta{{ pregunta.2 }}" type="text" value="{{ pregunta.3 }}">
+                            <input name="pregunta_latex{{ pregunta.2 }}" type="text" value="{{pregunta.0}}">
+                        </div>
+                        <br>
+                        {% for respuesta in pregunta.1 %}
+                            <label for="{{ pregunta.2 }}"></label>
+                            <input name="{{ pregunta.2 }}" type="radio" value="{{ respuesta }}">{{ respuesta }}
+                            <br>
+                            <br>
+                        {% empty %}
+                            Respuesta: <input name="{{ pregunta.2 }}" type="text" required>
+                            <br>
+                            <br>
+                        {% endfor %}
+                    {% else %}
+                        <div style="display: none;">
+                            <input name="pregunta{{ pregunta.2 }}" type="text" value="{{ pregunta.3 }}">
+                            <input name="pregunta_latex{{ pregunta.2 }}" type="text" value="{{pregunta.0}}">
+                        </div>
+                        {% for respuesta in pregunta.1 %}
+                            {% if respuesta == 'break' %}
+                                <div style="display: none;">
+                                    <input name="{{ pregunta.2}}-{{forloop.counter}}" type="text" value="no_stop_here">
+                                </div>
+                                <br>
+                            {% elif respuesta == ")." %}
+                                <div style="display: none;">
+                                    <input name="{{ pregunta.2}}-{{forloop.counter}}" type="text" value="no_stop_here">
+                                </div>
+                                {{ respuesta }}
+                            {% else %}
+                                {{ respuesta }}
+                                <input name="{{ pregunta.2}}-{{forloop.counter }}" type="text" required>
+                            {% endif %}
+                        {% endfor %}
+                        <br>
+                        <br>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <p></p>
+        <br>
+        <br>
+        <div>
+            Numero de cuenta: <input id="cta_unam" name="numero_cuenta" type="text" required>
+            <p id="mensaje_cta"></p>
+        </div>
+        <p></p>
+        <div>
+            <button id="enviar_examen" type="submit" class="save btn btn-default">Enviar Examen</button>
+        </div>
+    </form>
+
+    <div>
+        <h3><a href="/">Regresar</a></h3>
+    </div>
+    {% include "examenes/detail_js.html" %}
+{% endblock %}
+
